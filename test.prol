@@ -1,0 +1,55 @@
+                              %ANAMNEZA:
+
+simptomi(hladnoca,[crvenilo, svrab,kozni_osip,oticanje]).
+simptomi(sunce,[crvenilo, svrab,kozni_osip]).
+simptomi(polen,[crvenilo_ociju,svrab_ociju,suzenje_ociju]).
+
+sadrzi(S,[]).
+sadrzi(S,[H|T]) :- member(H,S), sadrzi(S,T).
+
+anamneza(S,Alergija) :- simptomi(Alergija,S2), sadrzi(S2,S).
+
+                              %DOPUNSKA ISPITIVANJA ZARAD UTVRDJIVANJA ALERGIJE I UZROKA ISTE:
+%prosledjujem listu simptoma i onda proveravam koji su to simpotmi neke alergije koji nisu pomenuti kako bi ih proverio lekar dodatnim ispitivanjima:
+%ne_sadrzi(S,[]).
+%ne_sadrzi(S,[H|T]) :- \+ member(H,S), ne_sadrzi(S,T).
+
+%preostali_simptomi(S,Alergija, L) :- anamneza(S,Alergija),simptomi(Alergija,[H|T]),ne_sadrizi(H,S) preostali_simptomi(S,T,L1), append([H],L1,L).
+%preostali_simptomi(S,Alergija, L) :- anamneza(S,Alergija),simptomi(Alergija,[H|T]),\+ ne_sadrizi(H,S),preostali_simptomi(S,T,L).
+
+
+%Radi za pozitivni([crvenilo,kozni_osip],[crvenilo,svrab,kozni_osip,oticanje],Lista).
+preostali(S,[],[]).
+preostali(S,[H|T], L) :- \+ member(H,S), preostali(S,T,L1), append([H],L1,L).
+preostali(S,[H|T], L) :- member(H,S), preostali(S,T,L).
+
+%proveravam iz celog niza simptoma neke alergije koji se ne nalazi u prosledjenim simpotmima S.[H|T] su elementi originalne liste simptoma.
+%Prolazim kroz listu simptoma koji su preostali i kazem ako je ta Alergija i taj simptom odradi to i to ispitivanje...
+
+
+                              %DIJAGNOZA:
+							 
+%   Polen drveca (u toku proleca)
+dijagnoza(S,God_doba,polen_drveca):-anamneza(S,Alergija),Alergija=polen,God_doba=prolece,!.
+
+%   Polen trava (krajem proleca i pocetkom leta)
+ddijagnoza(S,God_doba,polen_trava):-anamneza(S,Alergija),Alergija=polen,God_doba=kraj_proleca;God_doba=pocetak_leta,!.
+
+%   Polen korova (u toku jeseni)
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=polen,God_doba=jesen,!.
+
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=hladnoca,God_doba=zima.
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=sunce,God_doba=leto.
+
+%ili samo prosledim naziv alergije:
+%dijagnoza(S,Alergija,God_doba) :- anamneza(S,Alergija),Alergija=hladnoca,God_doba=zima.
+%dijagnoza(S,Alergija,God_doba) :- anamneza(S,Alergija),Alergija=sunce,God_doba=leto.
+
+
+
+                 %uneti kao upit:
+%anamneza([crvenilo,svrab,kozni_osip],Alergije). 
+%anamneza([crvenilo,svrab,kozni_osip,oticanje],Alergije).
+%dijagnoza([crvenilo,svrab,kozni_osip],Alergija,zima).
+%dijagnoza([crvenilo,svrab,kozni_osip],Alergija,leto).
+

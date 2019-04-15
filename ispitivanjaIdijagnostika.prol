@@ -1,0 +1,141 @@
+                              %ANAMNEZA:
+
+simptom(hladnocu,[
+ crvenilo,
+ svrab, 
+ kozni_osip,
+ oticanje]).
+
+simptom(sunce,[
+ crvenilo,
+ svrab,
+ kozni_osip]).
+
+simptom(jks,[
+ mucnina,
+ povracanje,
+ glavobolja,
+ kozni_osip,
+ anafilakticki_sok]).
+
+simptom(penicilin,[
+ kozni_osip,
+ koprivnjaca,
+ svrab,
+ povisena_temperatura,
+ otok,
+ gusenje,
+ svrab_ociju,
+ suzenje_ociju,
+ anafilakticki_sok]).
+
+
+simptom(polen,[
+ crvenilo_ociju, 
+ svrab_ociju,
+ suzenje_ociju,
+ kijanje,
+ vodena_sekrecija_iz_nosa,
+ svrab_nosne_sluznice,
+ crvenilo_nosne_sluznice,
+ suvi_kasalj,
+ otezano_disanje,
+ crvenilo_koze,
+ dermatitis]).
+
+simptom(alergijski_rinitis,[
+ kijanje,
+ zapusen_nos,
+ vodena_sekrecija_iz_nosa,
+ crvenilo_ociju,
+ svrab_ociju,
+ svrab_nosne_sluznice,
+ crvenilo_nosne_sluznice,
+ kasalj,
+ grebanje_u_grlu]).
+
+%Alergija na ujed insekta:
+simptom(venom_insekta,[
+ koprivnjaca,
+ otok,
+ mucnina,
+ povracanje,
+ proliv,
+ otezano_disanje,
+ sviranje_u_grudima,
+ smetnje_sa_gutanjem]).
+
+%Kontaktni dermatitis (ekcem):
+simptom(ekcem,[
+ crvenilo, 
+ svrab,
+ kozni_osip,
+ otok,
+ plikovi,
+ krastice_na_kozi,
+ perutanje_koze]).
+
+%Urtikarija (koprivnjaca):
+simptom(urtikarija,[
+ crvenilo,
+ svrab,
+ pojava_urtika]).   
+
+
+%Periodi u godini (neke alergije su sezonske):
+god_doba(prolece).
+god_doba(pocetak_proleca).
+god_doba(kraj_proleca).
+god_doba(pocetak_leta).
+god_doba(kraj_leta).
+god_doba(leto).
+god_doba(jesen).
+god_doba(zima).
+god_doba(nebitno).
+
+
+   %Algoritam za prolazak kroz listu simptoma i filtriranje potencijalnih alergija, na osnovu unetih simptoma.
+sadrzi(S,[]).
+sadrzi(S,[H|T]) :- member(H,S), sadrzi(S,T).
+
+
+%predikat anamneza za unetu listu simptoma S vraca pocetnu pretpostavku o jednoj ili vise potencijalnih alergija:
+anamneza(S,Alergija) :- simptom(Alergija,S2), sadrzi(S2,S).
+
+
+                              %DOPUNSKA ISPITIVANJA ZARAD UTVRDJIVANJA ALERGIJE I UZROKA ISTE:
+							  
+%Radi za preostali([crvenilo,kozni_osip],[crvenilo,svrab,kozni_osip,oticanje],Lista).
+preostali(S,[],[]).
+preostali(S,[H|T], L) :- \+ member(H,S), preostali(S,T,L1), append([H],L1,L).
+preostali(S,[H|T], L) :- member(H,S), preostali(S,T,L).
+
+%proveravam iz celog niza simptoma neke alergije koji se ne nalazi u prosledjenim simpotmima S.[H|T] su elementi originalne liste simptoma.
+%Prolazim kroz listu simptoma koji su preostali i kazem ako je ta Alergija i taj simptom odradi to i to ispitivanje...
+
+
+                              %DIJAGNOZA:
+							  
+							  %   Polen drveca (u toku proleca)
+dijagnoza(S,God_doba,polen_drveca):-anamneza(S,Alergija),Alergija=polen,God_doba=prolece,!.
+
+%   Polen trava (krajem proleca i pocetkom leta)
+ddijagnoza(S,God_doba,polen_trava):-anamneza(S,Alergija),Alergija=polen,God_doba=kraj_proleca;God_doba=pocetak_leta,!.
+
+%   Polen korova (u toku jeseni)
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=polen,God_doba=jesen,!.
+
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=hladnoca,God_doba=zima.
+dijagnoza(S,God_doba,polen_korova):-anamneza(S,Alergija),Alergija=sunce,God_doba=leto.
+
+%ili samo prosledim naziv alergije:
+%dijagnoza(S,Alergija,God_doba) :- anamneza(S,Alergija),Alergija=hladnoca,God_doba=zima.
+%dijagnoza(S,Alergija,God_doba) :- anamneza(S,Alergija),Alergija=sunce,God_doba=leto.
+
+
+                 %uneti kao upit:
+%anamneza([crvenilo,svrab,kozni_osip],Alergije). 
+%anamneza([crvenilo,svrab,kozni_osip,oticanje],Alergije).
+%dijagnoza([crvenilo,svrab,kozni_osip],Alergija,zima).
+%dijagnoza([crvenilo,svrab,kozni_osip],Alergija,leto).
+
