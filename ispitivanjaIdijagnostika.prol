@@ -135,6 +135,16 @@ koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost < 74, Starost >= 2
 koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
 koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
 
+
+koeficijent_rizika(zivotinje, X, Starost, musko) :- Starost < 14, X is 0 * 1.1.
+koeficijent_rizika(zivotinje, X, Starost, zensko) :- Starost < 14, X is 0 * 0.9.
+koeficijent_rizika(zivotinje, X, Starost, musko) :- Starost < 29, Starost >= 14, X is 0.9 * 1.1.
+koeficijent_rizika(zivotinje, X, Starost, zensko) :- Starost < 29, Starost >= 14, X is 0.9 * 0.9.
+koeficijent_rizika(zivotinje, X, Starost, musko) :- Starost < 74, Starost >= 29, X is 0.7 * 1.1.
+koeficijent_rizika(zivotinje, X, Starost, zensko) :- Starost < 74, Starost >= 29, X is 0.7 * 0.9.
+koeficijent_rizika(zivotinje, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
+koeficijent_rizika(zivotinje, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
+
 pol(musko).
 pol(zensko).
 
