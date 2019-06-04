@@ -135,6 +135,24 @@ koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost < 74, Starost >= 2
 koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
 koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
 
+koeficijent_rizika(venom_insekta, X, Starost, musko) :- Starost < 2, X is 0 * 1.2.
+koeficijent_rizika(venom_insekta, X, Starost, zensko) :- Starost < 2, X is 0 * 0.8.
+koeficijent_rizika(venom_insekta, X, Starost, musko) :- Starost < 24, Starost >= 3, X is 0.9 * 1.2.
+koeficijent_rizika(venom_insekta, X, Starost, zensko) :- Starost < 24, Starost >= 3, X is 0.9 * 0.8.
+koeficijent_rizika(venom_insekta, X, Starost, musko) :- Starost < 60, Starost >= 24, X is 0.7 * 1.2.
+koeficijent_rizika(venom_insekta, X, Starost, zensko) :- Starost < 60, Starost >= 24, X is 0.7 * 0.8.
+koeficijent_rizika(venom_insekta, X, Starost, musko) :- Starost >= 60, X is 0.5 * 1.2.
+koeficijent_rizika(venom_insekta, X, Starost, zensko) :- Starost >= 60, X is 0.5 * 0.8.
+
+koeficijent_rizika(alergijski_rinitis, X, Starost, musko) :- Starost < 16, X is 0 * 0.7.
+koeficijent_rizika(alergijski_rinitis, X, Starost, zensko) :- Starost < 16, X is 0 * 1.3.
+koeficijent_rizika(alergijski_rinitis, X, Starost, musko) :- Starost < 30, Starost >= 16, X is 0.8 * 0.7.
+koeficijent_rizika(alergijski_rinitis, X, Starost, zensko) :- Starost < 30, Starost >= 16, X is 0.8 * 1.3.
+koeficijent_rizika(alergijski_rinitis, X, Starost, musko) :- Starost < 75, Starost >= 30, X is 0.6 * 0.7.
+koeficijent_rizika(alergijski_rinitis, X, Starost, zensko) :- Starost < 75, Starost >= 30, X is 0.6 * 1.3.
+koeficijent_rizika(alergijski_rinitis, X, Starost, musko) :- Starost >= 75, X is 0.4 * 0.7.
+koeficijent_rizika(alergijski_rinitis, X, Starost, zensko) :- Starost >= 75, X is 0.4 * 1.3.
+
 
 pol(musko).
 pol(zensko).
