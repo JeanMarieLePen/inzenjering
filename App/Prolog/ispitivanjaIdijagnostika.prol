@@ -293,7 +293,7 @@ pregled(alergija_na_hranu, detaljni_pregledi_koze_i_potkoznog_tkiva, 60).
 pregled(alergija_na_hranu, merenje_nivoa_hemoglobina_A1c, 60).
 pregled(alergija_na_hranu, upucivanje_na_kucno_lecenje, 40).
 
-zahvat(alergija_na_hranu, izbacivanje_namirnice_iz_ishrane, 80)
+zahvat(alergija_na_hranu, izbacivanje_namirnice_iz_ishrane, 80).
 zahvat(alergija_na_hranu, terapija_usiju, 40).
 
 %PREGLEDI I ZAHVATI ZA ALERGIJSKI IZAZVAN KONJUKTIVITIS
@@ -306,9 +306,10 @@ pregled(alergijski_izazvan_konjuktivitis, ispitivanje_sluzokoze_oka, 45).
 pregled(alergijski_izazvan_konjuktivitis, detaljni_pregledi_koze_i_potkoznog_tkiva, 45).
 pregled(alergijski_izazvan_konjuktivitis, detaljni_pregledi_nosa_usta_i_zdrela, 10).
 
-zahvat(alergijski_izazvan_konjuktivitis, 3%_rasvor_borne_kiseline, 80).
+zahvat(alergijski_izazvan_konjuktivitis, rastvor_borne_kiseline, 80).
 zahvat(alergijski_izazvan_konjuktivitis, antibiotici, 20).
 zahvat(alergijski_izazvan_konjuktivitis, kapi_za_oci, 20).
+
 %PREGLEDI I ZAHVATI ZA ALERGIJU NA ZIVOTINJE
 
 pregled(alergija_na_zivotinje,detaljni_pregledi_koze_i_potkoznog_tkiva, 100).

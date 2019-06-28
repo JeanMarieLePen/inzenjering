@@ -126,6 +126,9 @@ public class CbrPreporuke implements StandardCBRApplication{
 	}
 
 	public CBRCaseBase preCycle() throws ExecutionException {
+		GUIApp.dodatnaIspitivanjaCBGui.clear();
+		GUIApp.metodLecenjaCBGui.clear();
+		GUIApp.preventivniPregledCBGui.clear();
 		System.out.println("Preciklus");
 		_caseBase.init(_connector);
 		java.util.Collection<CBRCase> cases = _caseBase.getCases();

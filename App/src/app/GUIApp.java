@@ -1168,7 +1168,7 @@ private JTextField textFieldMetodLecenja;
 							//Prolog deo:
 
 							try {		
-								
+								rezultatIspitivanja.clear();
 								textIzDijagnoze = JListDijagnozaProlog.getSelectedValues();
 								indexDijagnoze = JListDijagnozaProlog.getSelectedIndex();
 								
@@ -1221,8 +1221,8 @@ private JTextField textFieldMetodLecenja;
 								loadDodatnaIspitivanjaCB();
 			
 							}catch(Exception e) {
-								//JOptionPane.showMessageDialog(null,"Morte izabrati jednu dijagnozu iz Case-Based!");
-								JOptionPane.showMessageDialog(null,e);
+								JOptionPane.showMessageDialog(null,"Niste selektovali dijagnozu iz Prologa ili Case-Based!");
+								
 								e.getStackTrace();
 							}
 						}
@@ -1260,7 +1260,6 @@ private JTextField textFieldMetodLecenja;
 
 								JListLecenjeProlog.setModel(DML);
 								
-								//metodLecenja = (String) rezultatMetodLecenja.get(JListLecenjeProlog.getSelectedIndex());
 								
 								System.out.println("METOD LECENJA: " + metodLecenja);
 							
@@ -1279,8 +1278,8 @@ private JTextField textFieldMetodLecenja;
 								
 
 							}catch(Exception e) {
-								//JOptionPane.showMessageDialog(null,"Morte izabrati jedan metod lecenja iz Case-Based!");
-								JOptionPane.showMessageDialog(null,e);
+								JOptionPane.showMessageDialog(null,"Niste selektovali jedan metod lecenja iz Prologa ili Case-Based!");
+								//JOptionPane.showMessageDialog(null,e);
 								e.getStackTrace();
 							}
 						}
