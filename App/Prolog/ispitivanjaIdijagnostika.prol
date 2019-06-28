@@ -1,0 +1,546 @@
+                              %ANAMNEZA:
+simptom(hladnocu,[
+ crvenilo_koze,
+ svrab_koze,
+ kozni_osip,
+ oticanje_koze]).
+
+simptom(hronicni_sinusitis,[
+ kasalj,
+ otezano_disanje,
+ glavobolja,
+ suvo_grlo,
+ temperatura,
+ bol_u_sinusima,
+ zakrcenje_sinusa,
+ facijalni_bol,
+ zakrcenje_pluca]).
+
+simptom(alergija_na_zivotinje, [
+ otezano_disanje,
+ svrab_ociju,
+ kasalj,
+ temperatura,
+ suvo_grlo,
+ akne,
+ oticanje_zglobova,
+ ostecenja_koze,
+ ocna_distorzija,
+ slabost_u_zglobovima]).
+
+simptom(alergijski_izazvan_konjuktivitis,[
+ crvenilo_ociju,
+ svrab_ociju,
+ bol_u_ocima,
+ suzenje_ociju,
+ otezano_disanje,
+ oticanje_ociju,
+ problemi_sa_vidom,
+ kasalj,
+ kijanje]).
+
+simptom(alergija_na_hranu, [
+ otezano_disanje,
+ kozni_osip, 
+ svrab_koze, 
+ povracanje, 
+ kasalj, 
+ oticanje_usana, 
+ kijanje, 
+ oticanje_prstiju, 
+ oticanje_saka]).
+
+simptom(sunce,[
+ crvenilo_koze,
+ svrab_koze,
+ kozni_osip]).
+
+simptom(polen,[
+ crvenilo_ociju, 
+ svrab_ociju,
+ suzenje_ociju,
+ kijanje,
+ vodena_sekrecija_iz_nosa,
+ svrab_nosne_sluznice,
+ crvenilo_nosne_sluznice,
+ kasalj,
+ otezano_disanje,
+ crvenilo_koze,
+ dermatitis]).
+
+simptom(alergijski_rinitis,[
+ kijanje,
+ zapusen_nos,
+ vodena_sekrecija_iz_nosa,
+ crvenilo_ociju,
+ svrab_ociju,
+ svrab_nosne_sluznice,
+ crvenilo_nosne_sluznice,
+ kasalj,
+ grebanje_u_grlu]).
+
+
+%Kontaktni dermatitis (ekcem):
+simptom(ekcem,[
+ crvenilo_koze, 
+ svrab_koze,
+ kozni_osip,
+ oticanje_koze,
+ plikovi,
+ krastice_na_kozi,
+ suvoca_koze]).
+
+%Urtikarija (koprivnjaca):
+simptom(urtikarija,[
+ crvenilo_koze,
+ svrab_koze,
+ pojava_urtika]).   
+
+
+simptom(seboreicni_dermatitis,[
+ svrab_koze,
+ suvoca_koze, 
+ kozni_osip,
+ crvenilo_koze,
+ premalo_kose,
+ akne]).
+
+simptom(hipersenzitivnost,[
+ svrab_koze,
+ kozni_osip,
+ periferni_edem,
+ kasalj,
+ oticanje_koze]).
+
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA EKCEM
+koeficijent_rizika(ekcem, X, Starost, musko) :- Starost < 14, X is 0 * 1.1.
+koeficijent_rizika(ekcem, X, Starost, zensko) :- Starost < 14, X is 0 * 0.9.
+koeficijent_rizika(ekcem, X, Starost, musko) :- Starost < 29, Starost >= 14, X is 0.9 * 1.1.
+koeficijent_rizika(ekcem, X, Starost, zensko) :- Starost < 29, Starost >= 14, X is 0.9 * 0.9.
+koeficijent_rizika(ekcem, X, Starost, musko) :- Starost < 74, Starost >= 29, X is 0.7 * 1.1.
+koeficijent_rizika(ekcem, X, Starost, zensko) :- Starost < 74, Starost >= 29, X is 0.7 * 0.9.
+koeficijent_rizika(ekcem, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
+koeficijent_rizika(ekcem, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA ALERGIJU NA SUNCE
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost < 1, X is  0 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost < 1, X is  0 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =< 4, Starost >= 1,  X is  0.3 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  4, Starost >= 1,  X is  0.3 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =<  14, Starost >=5,  X is  0.5 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  14, Starost >= 5,  X is  0.5 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =<  44, Starost >=30,  X is  0.9 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  44, Starost >= 30,  X is  0.9 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =<  59, Starost >=45,  X is  1.4 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  59, Starost >= 45,  X is  1.4 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =<  74, Starost >=60,  X is  1.7 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  74, Starost >=60,  X is  1.7 * 1.
+koeficijent_rizika(sunce, X, Starost, musko) :- Starost =<  74,  X is  1.7 * 1.
+koeficijent_rizika(sunce, X, Starost, zensko) :- Starost =<  74,  X is  1.7 * 1.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA ALERGIJU NA HRANU
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost < 1, X is 2.5 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost < 1, X is 2.5 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost >= 1, Starost =< 4, X is 4.8 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost >= 1, Starost =< 4, X is 4.8 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 4 , Starost =< 14, X is 3.1 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 4 , Starost =< 14, X is 3.1 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 14 , Starost =< 29, X is 0.7 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 14 , Starost =< 29, X is 0.7 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 29 , Starost =< 44, X is 0.5 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 29 , Starost =< 44, X is 0.5 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 44 , Starost =< 59, X is 0.2 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 44 , Starost =< 59, X is 0.2 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 59 , Starost =< 74, X is 0.4 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 59 , Starost =< 74, X is 0.4 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, musko) :- Starost > 74,  X is 0.1 * 1.
+koeficijent_rizika(alergija_na_hranu, X, Starost, zensko) :- Starost > 74, X is 0.1 * 1.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA HRONICNI SINUSITIS
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost < 1, X is 0.5 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost < 1, X is 0.5 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 1, Starost =< 4, X is 1.4 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 1, Starost =< 4, X is 1.4 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 5, Starost =< 14, X is 1.4 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 5, Starost =< 14, X is 1.4 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 15, Starost =< 29, X is 1 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 15, Starost =< 29, X is 1 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 30, Starost =< 44, X is 1.2 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 30, Starost =< 44, X is 1.2 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 45, Starost =< 59, X is 1.1 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 45, Starost =< 59, X is 1.1 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 60, Starost =< 74, X is 0.8 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 60, Starost =< 74, X is 0.8 * 1.1.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, musko) :- Starost >= 75, X is 0.4 * 0.9.
+koeficijent_rizika(hronicni_sinusitis, X, Starost, zensko) :- Starost >= 75, X is 0.4 * 1.1.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA ALERGIJU NA ZIVOTINJE
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost < 1, X is 0.1.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost < 1, X is 0.1.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 1, Starost =< 4, X is 1.4.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 1, Starost =< 4, X is 1.4.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 5, Starost =< 14, X is 2.9.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 5, Starost =< 14, X is 2.9.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 15, Starost =< 29, X is 0.9.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 15, Starost =< 29, X is 0.9.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 30, Starost =< 44, X is 2.3.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 30, Starost =< 44, X is 2.3.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 45, Starost =< 59, X is 0.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 45, Starost =< 59, X is 0.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 60, Starost =< 74, X is 0.6.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 60, Starost =< 74, X is 0.6.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, musko) :- Starost >= 75, X is 0.
+koeficijent_rizika(alergija_na_zivotinje, X, Starost, zensko) :- Starost >= 75, X is 0.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA ALERGIJSKI IZAZVAN KONJUKTIVITIS
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost < 1, X is 0.6 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost < 1, X is 0.6 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 1, Starost =< 4, X is 1.2 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 1, Starost =< 4, X is 1.2 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 5, Starost =< 14, X is 3.4 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 5, Starost =< 14, X is 3.4 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 15, Starost =< 29, X is 0.9 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 15, Starost =< 29, X is 0.9 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 30, Starost =< 44, X is 0.7 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 30, Starost =< 44, X is 0.7 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 45, Starost =< 59, X is 0.8 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 45, Starost =< 59, X is 0.8 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 60, Starost =< 74, X is 0.6 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 60, Starost =< 74, X is 0.6 * 1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, musko) :- Starost >= 75, X is 0.5 * 1.1.
+koeficijent_rizika(alergijski_izazvan_konjuktivitis, X, Starost, zensko) :- Starost >= 75, X is 0.5 * 1.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA HLADNOCU
+koeficijent_rizika(hladnocu, X, Starost, musko) :- Starost < 14, X is 0 * 1.1.
+koeficijent_rizika(hladnocu, X, Starost, zensko) :- Starost < 14, X is 0 * 0.9.
+koeficijent_rizika(hladnocu, X, Starost, musko) :- Starost < 29, Starost >= 14, X is 0.9 * 1.1.
+koeficijent_rizika(hladnocu, X, Starost, zensko) :- Starost < 29, Starost >= 14, X is 0.9 * 0.9.
+koeficijent_rizika(hladnocu, X, Starost, musko) :- Starost < 74, Starost >= 29, X is 0.7 * 1.1.
+koeficijent_rizika(hladnocu, X, Starost, zensko) :- Starost < 74, Starost >= 29, X is 0.7 * 0.9.
+koeficijent_rizika(hladnocu, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
+koeficijent_rizika(hladnocu, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA URITRAKIJU
+koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost < 14, X is 0 * 1.1.
+koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost < 14, X is 0 * 0.9.
+koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost < 29, Starost >= 14, X is 0.9 * 1.1.
+koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost < 29, Starost >= 14, X is 0.9 * 0.9.
+koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost < 74, Starost >= 29, X is 0.7 * 1.1.
+koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost < 74, Starost >= 29, X is 0.7 * 0.9.
+koeficijent_rizika(urtikarija, X, Starost, musko) :- Starost >= 74, X is 0.5 * 1.1.
+koeficijent_rizika(urtikarija, X, Starost, zensko) :- Starost >= 74, X is 0.5 * 0.9.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA SEBOREICNI DERMATITIS
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost < 1, X is 8.4 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost < 1, X is 8.4 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =< 4, Starost >= 1, X is 0.5 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =< 4, Starost >= 1, X is 0.5 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =<  14, Starost >=5, X is 0.8 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =<  14, Starost >=5, X is 0.8 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =<  29, Starost >=15, X is 0.5 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =<  29, Starost >=15, X is 0.5 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =<  44, Starost >=30, X is 0.8 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =<  44, Starost >=30, X is 0.8 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =<  59, Starost >=45, X is 0.8 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =<  59, Starost >=45, X is 0.8 * 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :- Starost =<  74, Starost >=60, X is 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost =<  74, Starost >=60, X is 0.9.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, musko) :-  Starost >=75, X is 0.9 * 1.2.
+koeficijent_rizika(seboreicni_dermatitis, X, Starost, zensko) :- Starost >=75, X is 0.9 * 0.9.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA HIPERSENZITIVNOST
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost < 1, X is  0.8.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost < 1, X is  0.8.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost =< 4, Starost >= 1,  X is  2.2.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost =<  4, Starost >= 1,  X is  2.2.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost =<  14, Starost >=5,  X is  1.9.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost =<  14, Starost >= 5,  X is  1.9.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost =<  29, Starost >=15,  X is  1.1.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost =<  29, Starost >= 15,  X is  1.1.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost =<  59, Starost >=30,  X is 1.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost =<  59, Starost >= 30,  X is 1.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost =<  74, Starost >=60,  X is  0.8.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost =<  74, Starost >=60,  X is  0.8.
+koeficijent_rizika(hipersenzitivnost, X, Starost, musko) :- Starost >=  75,  X is  0.3.
+koeficijent_rizika(hipersenzitivnost, X, Starost, zensko) :- Starost >=  75,  X is  0.3.
+
+%IZRACUNAVANJE KOEFICIJENTA RIZIKA BOLESTI SPRAM GODINA I POLA ZA POLEN
+koeficijent_rizika(polen, X, Starost, musko) :- Starost < 1, X is  0.3*1.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost < 1, X is  0.3*1.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost =< 4, Starost >= 1,  X is  1.5.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost =<  4, Starost >= 1,  X is  1.5.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost =<  14, Starost >=5,  X is  2.6.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost =<  14, Starost >= 5,  X is  2.6.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost =<  29, Starost >=15,  X is  0.8*1.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost =<  29, Starost >= 15,  X is  0.8*1.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost =<  44, Starost >=30,  X is 1*1.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost =<  44, Starost >= 30,  X is 1*1.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost =<  59, Starost >=45,  X is  0.9.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost =<  59, Starost >=45,  X is  0.9.
+koeficijent_rizika(polen, X, Starost, musko) :- Starost >=  60,  X is  0.5.
+koeficijent_rizika(polen, X, Starost, zensko) :- Starost >=  60,  X is  0.5.
+
+
+%DODATNA ISPITIVANJA I METODI LECENJA:
+
+
+%PREGLEDI I ZAHVATI ZA ALERGIJU NA HRANU
+
+pregled(alergija_na_hranu, potpuni_fizicki_pregled_koze, 100).
+pregled(alergija_na_hranu, dijagnostifikovanje_u_formi_konsultacija, 70).
+pregled(alergija_na_hranu, detaljni_pregledi_koze_i_potkoznog_tkiva, 60).
+pregled(alergija_na_hranu, merenje_nivoa_hemoglobina_A1c, 60).
+pregled(alergija_na_hranu, upucivanje_na_kucno_lecenje, 40).
+
+zahvat(alergija_na_hranu, izbacivanje_namirnice_iz_ishrane, 80)
+zahvat(alergija_na_hranu, terapija_usiju, 40).
+
+%PREGLEDI I ZAHVATI ZA ALERGIJSKI IZAZVAN KONJUKTIVITIS
+
+pregled(alergijski_izazvan_konjuktivitis, potpuni_fizicki_pregled_koze, 100).
+pregled(alergijski_izazvan_konjuktivitis, merenje_nivoa_hemoglobina_A1c, 70).
+pregled(alergijski_izazvan_konjuktivitis, oftamoloski_i_otoloski_pregled, 55).
+pregled(alergijski_izazvan_konjuktivitis, pregled_ociju, 50).
+pregled(alergijski_izazvan_konjuktivitis, ispitivanje_sluzokoze_oka, 45).
+pregled(alergijski_izazvan_konjuktivitis, detaljni_pregledi_koze_i_potkoznog_tkiva, 45).
+pregled(alergijski_izazvan_konjuktivitis, detaljni_pregledi_nosa_usta_i_zdrela, 10).
+
+zahvat(alergijski_izazvan_konjuktivitis, 3%_rasvor_borne_kiseline, 80).
+zahvat(alergijski_izazvan_konjuktivitis, antibiotici, 20).
+zahvat(alergijski_izazvan_konjuktivitis, kapi_za_oci, 20).
+%PREGLEDI I ZAHVATI ZA ALERGIJU NA ZIVOTINJE
+
+pregled(alergija_na_zivotinje,detaljni_pregledi_koze_i_potkoznog_tkiva, 100).
+pregled(alergija_na_zivotinje,kultura_krvi, 85). 
+pregled(alergija_na_zivotinje,testiranje_antitela_virusa_influence, 85).
+pregled(alergija_na_zivotinje,ct_glave, 80).
+pregled(alergija_na_zivotinje,testiranje_funkcija_jetre, 80).
+
+zahvat(alergija_na_zivotinje,transplantacija_roznjace, 10).
+zahvat(alergija_na_zivotinje,operacija_slezine, 10).
+zahvat(alergija_na_zivotinje,uklanjanje_vanmatericne_trudnoce, 10).
+
+
+%PREGLEDI I ZAHVATI ZA POLEN
+
+pregled(polen, potpuni_fizicki_pregled_koze, 100).
+pregled(polen, dijagnostifikovanje_u_formi_konsultacija, 70).
+pregled(polen, merenje_nivoa_masnoce_u_krvi, 70).
+pregled(polen, detaljni_pregledi_koze_i_potkoznog_tkiva, 35).
+pregled(polen, oftamoloski_i_otoloski_pregled, 25).
+pregled(polen, pregled_ociju, 10).
+pregled(polen, detaljni_pregledi_nosa_usta_i_zdrela, 10).
+
+zahvat(polen, terapija_inhalatorom, 75).
+
+%PREGLEDI I ZAHVATI ZA HIPERSENZITIVNOST
+
+pregled(hipersenzitivnost, potpuni_fizicki_pregled_koze, 100).
+pregled(hipersenzitivnost, detaljni_pregledi_koze_i_potkoznog_tkiva, 55).
+pregled(hipersenzitivnost, rutinsko_rendgenski_snimak_grudnog_kosa, 20).
+
+zahvat(hipersenzitivnost, terapija_inhalatorom, 75).
+
+
+%PREGLEDI I ZAHVATI ZA EKCEM
+
+pregled(ekcem, potpuni_fizicki_pregled_koze, 100).
+pregled(ekcem, detaljni_pregledi_koze_i_potkoznog_tkiva, 60).
+pregled(ekcem, upucivanje_na_kucno_lecenje, 40).
+pregled(ekcem, pregled_gastrointestinalnog_trakta, 10).
+pregled(ekcem, pregled_muskuloskeletalnog_sistema, 10).
+
+zahvat(ekcem, biopsija_tkiva, 65).
+zahvat(ekcem, izrezivanje_lezija_koze, 50).
+
+%PREGLEDI I ZAHVATI ZA SEBOREICNI DERMATITIS
+
+pregled(seboreicni_dermatitis, potpuni_fizicki_pregled_koze, 100).
+pregled(seboreicni_dermatitis, detaljni_pregledi_koze_i_potkoznog_tkiva, 15).
+pregled(seboreicni_dermatitis, upucivanje_na_kucno_lecenje, 10).
+pregled(seboreicni_dermatitis, pregled_ociju, 10).
+
+zahvat(seboreicni_dermatitis, zahvat_fizickog_uklanjanja, 60).
+zahvat(seboreicni_dermatitis, biopsija, 50).
+zahvat(seboreicni_dermatitis, zahvat_uklanjanja_koze, 35).
+
+%PREGLEDI I ZAHVATI ZA HRONICNI SINUSITIS
+
+pregled(hronicni_sinusitis, kompjuterizovana_tomografija, 100).
+pregled(hronicni_sinusitis, dijagnostifikovanje_u_formi_konsultacija, 95).
+pregled(hronicni_sinusitis, detaljni_pregledi_nosa_usta_i_zdrela,  50).
+pregled(hronicni_sinusitis, testiranje_antitela_virusa_influence, 40).
+pregled(hronicni_sinusitis, detaljni_pregledi_koze_i_potkoznog_tkiva, 25).
+pregled(hronicni_sinusitis, oftamoloski_i_otoloski_pregled, 25).
+pregled(hronicni_sinusitis, traheskopija_i_laringoskopija_sa_biopsijom, 10).
+
+%PREGLEDI I ZAHVATI ZA ALERGIJU NA SUNCE
+pregled(sunce, biopsija_tkiva, 70).
+pregled(sunce, potpuni_fizicki_pregled_koze, 100).
+pregled(sunce, detaljni_pregledi_koze_i_potkoznog_tkiva, 65).
+
+zahvat(sunce, zahvat_odstranjivanja, 85).
+zahvat(sunce, izrezivanje_lezije_koze, 75).
+zahvat(sunce, saniranje_rana, 60).
+zahvat(sunce, terapija_koze_i_grudi, 10).
+
+%PREGLEDI I ZAHVATI ZA ALERGIJU NA HLADNOCU
+pregled(hladnocu, fizicko_izlaganje_koze_hladnom, 100).
+pregled(hladnocu, potpuni_fizicki_pregled_koze, 90).
+pregled(hladnocu, detaljni_pregledi_koze_i_potkoznog_tkiva, 80).
+
+zahvat(hladnocu, izbegavanje_hladnoce, 90).
+zahvat(hladnocu, lek_iz_grupe_antihistaminika, 70).
+zahvat(hladnocu, lek_iz_grupe_antiholinergika, 60).
+zahvat(hladnocu, lek_iz_grupe_kortikosteroida, 60).
+zahvat(hladnocu, koriscenje_cold_krama, 60).
+
+%PREGLEDI I ZAHVATI ZA ALERGIJU NA ALERGIJSKI RINITIS
+pregled(alergijski_rinitis, kozne_probe_na_inhalacione_alergene, 70).
+pregled(alergijski_rinitis, kozne_probe_na_nutritivne_alergene, 70).
+pregled(alergijski_rinitis, pregled_krvne_slike, 50).
+
+zahvat(alergijski_rinitis, tretman_vodenom_parom, 80).
+zahvat(alergijski_rinitis, nazalni_kortikosteroidi_uneti_pumpicom, 80).
+zahvat(alergijski_rinitis, jacanje_imuniteta_vitaminima, 30).
+
+%PREGLEDI I ZAHVATI ZA URTIKARIJE
+pregled(urtikarija, biopsija_tkiva, 70).
+pregled(urtikarija, potpuni_fizicki_pregled_koze, 100).
+pregled(urtikarija, kozne_probe_na_inhalacione_alergene, 80).
+pregled(urtikarija, kozne_probe_na_nutritivne_alergene, 70).
+
+zahvat(urtikarija, lek_iz_grupe_antihistaminika, 90).
+zahvat(urtikarija, izbegavanje_uzroka_alergije, 80).
+
+preporuci_pregled(X, Y) :- pregled(X, Y, Z), Z >= 30.
+preporuci_zahvat(X,Y) :- zahvat(X,Y,Z), Z >= 30.
+
+
+%PREVENTIVNI PREGLEDI SPRAM GODINA I ALERGIJE:
+
+maloletni_preventivni(sunce, musko, dermatoloski_pregled_za_2_meseca).
+punoletni_preventivni(sunce, musko, dermatoloski_pregled_za_6_meseci).
+
+maloletni_preventivni(sunce, zensko, dermatoloski_pregled_za_2_meseca).
+punoletni_preventivni(sunce, zensko, dermatoloski_pregled_za_6_meseci).
+
+maloletni_preventivni(ekcem, musko, dermatoloski_pregled_za_3_meseca).
+punoletni_preventivni(ekcem, musko, dermatoloski_pregled_za_7_meseci).
+
+maloletni_preventivni(ekcem, zensko, dermatoloski_pregled_za_3_meseca).
+punoletni_preventivni(ekcem, zensko, dermatoloski_pregled_za_7_meseci).
+
+maloletni_preventivni(jkc, musko, pregled_za_4_meseca).
+punoletni_preventivni(jkc, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(jkc, zensko, pregled_za_4_meseca).
+punoletni_preventivni(jkc, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(seboreicni_dermatitis, musko, pregled_za_4_meseca).
+punoletni_preventivni(seboreicni_dermatitis, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(seboreicni_dermatitis, zensko, pregled_za_4_meseca).
+punoletni_preventivni(seboreicni_dermatitis, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(hronicni_sinusitis, musko, pregled_za_4_meseca).
+punoletni_preventivni(hronicni_sinusitis, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(hronicni_sinusitis, zensko, pregled_za_4_meseca).
+punoletni_preventivni(hronicni_sinusitis, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(hipersenzitivnost, musko, pregled_za_4_meseca).
+punoletni_preventivni(hipersenzitivnost, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(hipersenzitivnost, zensko, pregled_za_4_meseca).
+punoletni_preventivni(hipersenzitivnost, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(hladnocu, musko, pregled_za_8_meseci).
+punoletni_preventivni(hladnocu, musko, pregled_za_6_meseci).
+
+maloletni_preventivni(hladnocu, zensko, pregled_za_8_meseci).
+punoletni_preventivni(hladnocu, zensko, pregled_za_6_meseci).
+
+maloletni_preventivni(alergija_na_zivotinje, musko, pregled_za_4_meseci).
+punoletni_preventivni(alergija_na_zivotinje, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergija_na_zivotinje, zensko, pregled_za_4_meseca).
+punoletni_preventivni(alergija_na_zivotinje, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(urtikarija, musko, pregled_za_4_meseci).
+punoletni_preventivni(urtikarija, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(urtikarija, zensko, pregled_za_4_meseca).
+punoletni_preventivni(urtikarija, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(venom_insekta, musko, pregled_za_4_meseci).
+punoletni_preventivni(venom_insekta, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(venom_insekta, zensko, pregled_za_4_meseca).
+punoletni_preventivni(venom_insekta, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(polen, musko, pregled_za_4_meseci).
+punoletni_preventivni(polen, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(polen, zensko, pregled_za_4_meseca).
+punoletni_preventivni(polen, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(penicilin, musko, pregled_za_4_meseci).
+punoletni_preventivni(penicilin, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(penicilin, zensko, pregled_za_4_meseca).
+punoletni_preventivni(penicilin, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergijski_izazvan_konjuktivitis, musko, pregled_za_4_meseci).
+punoletni_preventivni(alergijski_izazvan_konjuktivitis, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergijski_izazvan_konjuktivitis, zensko, pregled_za_4_meseca).
+punoletni_preventivni(alergijski_izazvan_konjuktivitis, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergijski_rinitis, musko, pregled_za_4_meseci).
+punoletni_preventivni(alergijski_rinitis, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergijski_rinitis, zensko, pregled_za_4_meseca).
+punoletni_preventivni(alergijski_rinitis, zensko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergija_na_hranu, musko, pregled_za_4_meseci).
+punoletni_preventivni(alergija_na_hranu, musko, pregled_za_5_meseci).
+
+maloletni_preventivni(alergija_na_hranu, zensko, pregled_za_4_meseca).
+punoletni_preventivni(alergija_na_hranu, zensko, pregled_za_5_meseci).
+
+preventivni_pregled(Alergija, Godine, Pol, Rezultat) :- maloletni_preventivni(Alergija, Pol, Rezultat), Godine < 18.
+preventivni_pregled(Alergija, Godine, Pol, Rezultat) :- punoletni_preventivni(Alergija, Pol, Rezultat), Godine >= 18.
+
+pol(musko).
+pol(zensko).
+
+
+
+%Algoritam za prolazak kroz listu simptoma i filtriranje potencijalnih alergija, na osnovu unetih simptoma.
+sadrzi(S,[]).
+sadrzi(S,[H|T]) :- member(H,S), sadrzi(S,T).
+
+%predikat anamneza za unetu listu simptoma S vraca pocetnu pretpostavku o jednoj ili vise potencijalnih alergija:
+anamneza(Lista_unetih_simptoma,Alergija_rezultat,Starost,Pol) :- simptom(Alergija_rezultat,Lista_svih_simptoma), sadrzi(Lista_svih_simptoma,Lista_unetih_simptoma), koeficijent_rizika(Alergija_rezultat, X, Starost, Pol), X > 0.
+%anamneza(Lista_unetih_simptoma,Alergija_rezultat) :- simptom(Alergija_rezultat,Lista_svih_simptoma), sadrzi(Lista_svih_simptoma,Lista_unetih_simptoma).
+
+
+%DOPUNSKA ISPITIVANJA ZARAD UTVRDJIVANJA ALERGIJE I UZROKA ISTE:
+
+%Radi za preostali([crvenilo,kozni_osip],[crvenilo,svrab,kozni_osip,oticanje],Lista).
+%Radi za preostali(X,[crvenilo,svrab,kozni_osip,oticanje],Lista).
+
+%preostali(S,[],[]).
+%preostali(S,[H|T], L) :- \+ member(H,S), preostali(S,T,L1), append([H],L1,L).
+%preostali(S,[H|T], L) :- member(H,S), preostali(S,T,L).
+
+%predikati koji od na osnovu liste simptoma na koje se pacijent pozalio i licnih parametara, pomocu predikata anamneza i simptom dolaze do liste svih simptoma koje pacijent mozda ima, a nije ih sve prijavio
+test(S, [X], Starost, Pol) :- anamneza(S, L, Starost, Pol), simptom(L, X).
+svi_simptomi(S, [H|T], Starost, Pol) :- anamneza(S, L, Starost, Pol), simptom(L, [H|T]).
+
+preostali(S,[],[],Starost, Pol).
+preostali(S,[H|T], L,Starost, Pol) :- test(S,[H|T], Starost, Pol), \+ member(H,S), preostali(S,T,L1,Starost, Pol), append([H],L1,L).
+preostali(S,[H|T], L,Starost, Pol) :- test(S,[H|T], Starost, Pol), member(H,S), preostali(S,T,L,Starost, Pol).
+                              
